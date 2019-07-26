@@ -8,12 +8,12 @@ class Cell {
     RClass = [];
     name = "";
     hasImage = false;
-    position = 0;
+    position = 1;
     constructor(value, result) {
         this.id = uuidv1();
         this.value = value;
         this.result = result;
-        this.position = 0;
+        this.position = 1;
         this.lastUpdate = new Date().getTime();
     }
 

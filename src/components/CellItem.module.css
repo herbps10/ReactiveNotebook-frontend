@@ -41,7 +41,7 @@
     flex-direction: column;
     flex-grow: 1;
     flex: 1 1 auto;
-    min-width: 960px;
+    min-width: 950px;
 }
 
 .actions {
@@ -139,4 +139,3 @@
 .resultContainer {
     width: 100%;
 }
-

@@ -7,7 +7,7 @@ const RImage = ({ cell, onImageLoad }) => (
         className={styles.resizable}
         lockAspectRatio={true}>
         <img
-            src={`http://localhost:5000/static/${cell.id}.svg?${cell.lastUpdate}`}
+            src={`http://localhost:5000/output/${cell.id}.svg?${cell.lastUpdate}`}
             onLoad={onImageLoad}
             className={styles.image} 
             alt="" />

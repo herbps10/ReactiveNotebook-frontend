@@ -1,0 +1,27 @@
+.header {
+    padding: 10px 0px 25px 0px;
+    margin-bottom: 20px;
+}
+
+.container {
+    max-width: 960px;
+    margin: 0px auto;
+}
+
+.logo {
+    display: inline-block;
+    font-family: "Open Sans";
+    font-weight: 300;
+}
+
+.status {
+    font-weight: 300;
+    float: right;
+    font-size: 0.8em;
+}
+
+.links {
+    float: right;
+    font-size: 0.8em;
+    padding-right: 20px;
+}

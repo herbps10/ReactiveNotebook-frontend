@@ -6,7 +6,7 @@ const RHtmlWidget = ({ cell }) => (
     <Resizable
         className={styles.resizable}>
        <iframe
-            src={`http://localhost:5000/static/${cell.id}.html?${cell.lastUpdate}`}
+            src={`http://localhost:5000/output/${cell.id}.html?${cell.lastUpdate}`}
             width='100%'
             height='100%'
             className={styles.iframe} />

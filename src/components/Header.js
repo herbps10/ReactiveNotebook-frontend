@@ -1,12 +1,27 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
+import styles from "./Header.module.css";
 
 class Header extends React.Component {
     render() {
-        const connected = <FontAwesomeIcon icon={faCircle}  color={this.props.connected ? "#27ae60" : "#d35400"} />
+        const icon = <FontAwesomeIcon icon={faCircle}  color={this.props.connected ? "#27ae60" : "#d35400"} />
+        const connected = this.props.connected ? "Connected" : "Disconnected";
         return (
-            <div>ReactiveNotebook {connected}</div>
+            <div className={styles.header}>
+                <div className={styles.container}>
+                    <div className={styles.logo} >ReactiveNotebook</div> 
+                    
+                    
+                    <div className={styles.status}>
+                        {connected} {icon}
+                    </div>
+                    
+                    <div className={styles.links}>
+                        <a href="/export" target="_blank">Export</a>
+                    </div>
+                </div>
+            </div>
         )
     }
 }
