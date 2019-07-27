@@ -9,6 +9,9 @@ class Cell {
     name = "";
     hasImage = false;
     position = 1;
+    defaultOpen = false;
+    viewWidth = null;
+    viewHeight = null;
     constructor(value, result) {
         this.id = uuidv1();
         this.value = value;

@@ -58,7 +58,7 @@ class RMatrix extends React.Component {
                             rowHeight={25}
                             height={height}
                             width={width - 20}
-                            columnWidth={data[0][0].toString().length * 15}
+                            columnWidth={data[1][0].toString().length * 15}
                             className={styles.grid}
                         >
                             {Cell}

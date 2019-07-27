@@ -28,7 +28,7 @@ const CellItem = observer(class CellItem extends React.Component {
 
         this.instance = null;
 
-        this.state = { active: true };
+        this.state = { active: this.props.cell.defaultOpen || false };
 
         this.containerRef = React.createRef();
         this.resultRef = React.createRef();
@@ -44,6 +44,7 @@ const CellItem = observer(class CellItem extends React.Component {
         this.onClick = this.onClick.bind(this);
         this.onDocumentClick = this.onDocumentClick.bind(this);
         this.onUpdateCell = this.onUpdateCell.bind(this);
+        this.onResizeStop = this.onResizeStop.bind(this);
         this.autocomplete = this.autocomplete.bind(this);
 
         this.codeMirrorOptions = {
@@ -101,13 +102,17 @@ const CellItem = observer(class CellItem extends React.Component {
       this.props.store.updateView(this.props.cell, e.detail);
     }
 
+    onResizeStop(e, direction, refToElement, delta) {
+      const newWidth = refToElement.clientWidth / refToElement.parentElement.clientWidth;
+      this.props.store.updateSize(this.props.cell, { width: newWidth });
+    }
+
     onDocumentClick(e) {
         //if(e.target.isEqualNode(this.activateRef.current)) return;
         //if(!this.containerRef.current.contains(e.target)) this.setState({ active: false });
     }
 
     onClick(e) {
-        console.log(this.state.active);
         this.setState({ active: !this.state.active });
     }
 
@@ -205,7 +210,7 @@ const CellItem = observer(class CellItem extends React.Component {
 
   render() {
     const image = this.props.cell.hasImage ? (
-      <RImage cell={this.props.cell} onImageLoad={this.onImageLoad} lastUpdate={this.props.cell.lastUpdate} />
+      <RImage cell={this.props.cell} onImageLoad={this.onImageLoad} lastUpdate={this.props.cell.lastUpdate} onResizeStop={this.onResizeStop} />
     ) : null;
 
     const result = this.resultView();

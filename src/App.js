@@ -16,7 +16,6 @@ const App = observer(class App extends React.Component {
       result.source !== null && result.destination !== null &&
       result.source.index !== result.destination.index
     ) {
-      console.log(result.source.index, result.destination.index);
       this.props.store.move(result.source.index, result.destination.index);
     }
   }
