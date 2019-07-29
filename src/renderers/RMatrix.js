@@ -1,5 +1,6 @@
 import React from 'react';
 import { FixedSizeGrid as Grid } from 'react-window';
+import { observer } from 'mobx-react';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import { Resizable } from 're-resizable';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,7 +8,7 @@ import { faCaretRight, faCaretUp } from '@fortawesome/free-solid-svg-icons';
 import styles from './RMatrix.module.css';
 
 
-class RMatrix extends React.Component {
+const RMatrix = observer(class RMatrix extends React.Component {
     constructor(props) {
         super(props)
         this.state = { open: false };
@@ -67,10 +68,17 @@ class RMatrix extends React.Component {
                 </AutoSizer>
             </Resizable>
         );
+        
+        console.log("name", this.props.cell.name);
+        const title = (
+            <pre className={styles.pre}>
+                {this.props.cell.name}{(this.props.cell.name === undefined ? '' : ': ')}matrix({this.props.cell.result.length}, {this.props.cell.result[0].length})
+            </pre>
+        )
 
         return (
-            <div>
-                <pre className={styles.pre}>{this.props.cell.name}: matrix({this.props.cell.result.length}, {this.props.cell.result[0].length})</pre>
+            <div data-name={this.props.cell.name}>
+                {title}
                 <button onClick={this.onClick} className={styles.toggle}>
                     <FontAwesomeIcon icon={this.state.open ? faCaretUp : faCaretRight} />
                 </button>
@@ -78,6 +86,6 @@ class RMatrix extends React.Component {
             </div>
         )
     }
-}
+});
 
 export default RMatrix;

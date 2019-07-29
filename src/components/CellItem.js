@@ -1,24 +1,36 @@
 import React from 'react';
-import ReactCodeMirror from 'react-codemirror';
 import { observer } from 'mobx-react';
 import { Draggable } from 'react-beautiful-dnd';
-import { BlockMath } from 'react-katex';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay, faTrashAlt, faGripLines } from '@fortawesome/free-solid-svg-icons';
+import AddCellButton from './AddCellButton.js';
+import Cell from '../stores/Cell.js';
+
+// Renderers
 import RMatrix from "../renderers/RMatrix.js";
 import RImage from "../renderers/RImage.js";
 import RHtmlWidget from '../renderers/RHtmlWidget.js';
 import RMd from '../renderers/RMd.js';
-import AddCellButton from './AddCellButton.js';
-import styles from "./CellItem.module.css";
-import Cell from '../stores/Cell.js';
-import suggest from '../suggest.js';
+import RFunction from '../renderers/RFunction.js';
+
+// Codemirror
+import ReactCodeMirror from 'react-codemirror';
 import CodeMirror from 'codemirror';
-import '../lib/show-hint.js';
-import '../lib/show-hint.css';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/idea.css';
+import '../lib/show-hint.js';
+import '../lib/show-hint.css';
+import suggest from '../suggest.js';
+
+// Katex
+import { BlockMath } from 'react-katex';
 import 'katex/dist/katex.min.css';
+
+// Icons
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlay, faTrashAlt, faGripLines } from '@fortawesome/free-solid-svg-icons';
+
+// Styles
+import styles from "./CellItem.module.css";
+
 
 import ('codemirror/mode/r/r');
 
@@ -28,7 +40,7 @@ const CellItem = observer(class CellItem extends React.Component {
 
         this.instance = null;
 
-        this.state = { active: this.props.cell.defaultOpen || false };
+        this.state = { active: this.props.cell.open || false };
 
         this.containerRef = React.createRef();
         this.resultRef = React.createRef();
@@ -113,17 +125,25 @@ const CellItem = observer(class CellItem extends React.Component {
     }
 
     onClick(e) {
-        this.setState({ active: !this.state.active });
+      this.toggleActive();
+    }
+
+    toggleActive() {
+      this.props.cell.open = !this.props.cell.open;
+      this.props.store.updateOpen(this.props.cell, { open: this.props.cell.open });
+      this.setState({ active: this.props.cell.open });
     }
 
     addCellAfter() {
-        this.setState({ active: false });
-        this.props.store.addCellAfter(this.props.cell, new Cell("", ""));
+        const newCell = new Cell("", "");
+        newCell.open = true;
+        this.props.store.addCellAfter(this.props.cell, newCell);
     }
 
     addCellBefore() {
-        this.setState({ active: false });
-        this.props.store.addCellBefore(this.props.cell, new Cell("", ""));
+        const newCell = new Cell("", "");
+        newCell.open = true;
+        this.props.store.addCellBefore(this.props.cell, newCell);
     }
 
     delete() {
@@ -164,10 +184,15 @@ const CellItem = observer(class CellItem extends React.Component {
         if(this.props.cell.RClass.includes("htmlwidget"))
           return <RHtmlWidget cell={this.props.cell} />
 
-        if (this.props.cell.RClass.includes("view"))
-            return <div dangerouslySetInnerHTML = {
-                { __html: this.props.cell.resultString() } }
-        />
+        if(this.props.cell.RClass.includes("view"))
+          return (
+            <div dangerouslySetInnerHTML = { { __html: this.props.cell.resultString() } } />
+          );
+
+        if(this.props.cell.RClass.includes("function"))
+            return (
+              <RFunction cell={this.props.cell} />
+            );
 
         if (this.props.cell.RClass.includes("matrix")) {
             return <RMatrix cell={this.props.cell} />;
@@ -184,18 +209,9 @@ const CellItem = observer(class CellItem extends React.Component {
       lineWrapping: false,
     };
 
-    let value = "";
-    if (this.props.cell.RClass.includes("function")) {
-      const f = this.props.cell.result[0].replace(/{$/, "");
-      value = (this.props.cell.name === "" || this.props.cell.name === undefined) ?
-        f
-        : this.props.cell.name + ": " + f;
-    }
-    else {
-      value = (this.props.cell.name === "" || this.props.cell.name === undefined) ?
+    const value = (this.props.cell.name === "" || this.props.cell.name === undefined) ?
         this.props.cell.resultString()
         : this.props.cell.name + ": " + this.props.cell.resultString();
-    }
 
     if (this.resultRef.current != null) {
       this.resultRef.current.getCodeMirror().doc.setValue(value);

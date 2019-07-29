@@ -1,0 +1,15 @@
+.toggle {
+    position: absolute;
+    left: -17px;
+    top: 6px;
+    z-index: 100;
+}
+
+.open {
+    height: auto;
+}
+
+.closed {
+    height: 1.5em;
+    overflow: auto;
+}

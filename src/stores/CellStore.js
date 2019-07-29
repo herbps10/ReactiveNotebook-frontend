@@ -89,6 +89,15 @@ class CellStore {
         this.webSocketService.sendMessage(JSON.stringify(payload));
     }
 
+    updateOpen(cell, value) {
+        const payload = {
+            type: 'updateOpen',
+            cell: cell,
+            value: value
+        };
+        this.webSocketService.sendMessage(JSON.stringify(payload));
+    }
+
     handleMessage(data) {
         const changeset = JSON.parse(data.data);
 
@@ -97,19 +106,21 @@ class CellStore {
         if (changeset.cells !== undefined) {
             const cells = Object.values(changeset.cells);
             this.cells = [];
-            console.log(changeset.cells);
             for (let i = 0; i < cells.length; i++) {
                 const change = cells[i];
 
                 const cell = new Cell(change.value[0], "");
-                cell.id = change.id[0];
-                cell.RClass = change.RClass;
-                cell.name = change.name[0];
-                cell.result = change.result;
-                cell.hasImage = change.hasImage[0];
-                cell.position = change.position[0];
-                if(change.viewWidth.length > 0) cell.viewWidth = change.viewWidth[0];
-                if(change.viewHeight.length > 0) cell.viewHeight = change.viewHeight[0];
+                cell.id             = change.id[0];
+                cell.RClass         = change.RClass;
+                cell.name           = change.name[0];
+                cell.result         = change.result;
+                cell.hasImage       = change.hasImage[0];
+                cell.position       = change.position[0];
+                cell.open           = change.open[0];
+                if(change.viewWidth.length > 0)
+                    cell.viewWidth  = change.viewWidth[0];
+                if(change.viewHeight.length > 0)
+                    cell.viewHeight = change.viewHeight[0];
 
                 this.addCell(cell);
             }
@@ -117,8 +128,7 @@ class CellStore {
             // If the cell set is empty, add a default cell
             if (cells.length === 0) {
                 const defaultCell = new Cell("", "");
-                defaultCell.defaultOpen = true; // Have the editor show the cell in active state
-                console.log('here');
+                defaultCell.open = true; // Have the editor show the cell in active state
                 this.addCell(defaultCell);
             }
         }
@@ -145,15 +155,18 @@ class CellStore {
                     });
 
                     if (change !== undefined) {
-                        cell[0].result = change.result;
-                        cell[0].lastUpdate = new Date().getTime();
-                        cell[0].hasImage = change.hasImage[0];
-                        cell[0].RClass = change.RClass;
-                        cell[0].name = change.name[0];
-                        cell[0].error = "";
-                        cell[0].position = change.position[0];
-                        if(change.viewWidth.length > 0) cell.viewWidth = change.viewWidth[0];
-                        if(change.viewHeight.length > 0) cell.viewHeight = change.viewHeight[0];
+                        cell[0].result      = change.result;
+                        cell[0].lastUpdate  = new Date().getTime();
+                        cell[0].hasImage    = change.hasImage[0];
+                        cell[0].RClass      = change.RClass;
+                        cell[0].name        = change.name[0];
+                        cell[0].error       = "";
+                        cell[0].position    = change.position[0];
+                        cell[0].open        = change.open[0];
+                        if(change.viewWidth.length > 0) 
+                            cell.viewWidth  = change.viewWidth[0];
+                        if(change.viewHeight.length > 0)
+                            cell.viewHeight = change.viewHeight[0];
                     }
                 }
             }

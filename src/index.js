@@ -9,6 +9,7 @@ import WebSocketService from './WebSocketService.js';
 const cellStore = new CellStore(new WebSocketService());
 
 window.cellStore = cellStore;
+window.stringWrap = (text) => "'" + text + "'";
 
 ReactDOM.render(<App store={cellStore} />, document.getElementById('root'));
 
