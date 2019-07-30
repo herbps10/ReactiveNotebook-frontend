@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCircle, faRadiationAlt } from '@fortawesome/free-solid-svg-icons';
 import styles from "./Header.module.css";
 
 class Header extends React.Component {
@@ -10,7 +10,10 @@ class Header extends React.Component {
         return (
             <div className={styles.header}>
                 <div className={styles.container}>
-                    <div className={styles.logo} >ReactiveNotebook</div> 
+                    <div className={styles.logo}>
+                      <FontAwesomeIcon icon={faRadiationAlt} /> &nbsp;
+                      Reactor
+                    </div> 
                     
                     
                     <div className={styles.status}>
