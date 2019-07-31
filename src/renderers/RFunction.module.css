@@ -11,5 +11,5 @@
 
 .closed {
     height: 1.5em;
-    overflow: auto;
+    overflow: hidden;
 }
