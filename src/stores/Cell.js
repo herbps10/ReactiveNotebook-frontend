@@ -12,6 +12,8 @@ class Cell {
     viewWidth = null;
     viewHeight = null;
     open = false;
+    defaultCell = false;
+    loading = false;
     constructor(value, result) {
         this.id = uuidv1();
         this.value = value;
@@ -32,7 +34,8 @@ decorate(Cell, {
     lastUpdate: observable,
     hasImage: observable,
     error: observable,
-    RClass: observable
+    RClass: observable,
+    loading: observable
 })
 
 export default Cell;

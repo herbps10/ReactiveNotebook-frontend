@@ -69,6 +69,7 @@ class CellStore {
             cell: cell
         }
         this.webSocketService.sendMessage(JSON.stringify(payload));
+        cell.loading = true;
     }
 
     updateView(cell, value) {
@@ -129,6 +130,7 @@ class CellStore {
             if (cells.length === 0) {
                 const defaultCell = new Cell("", "");
                 defaultCell.open = true; // Have the editor show the cell in active state
+                defaultCell.defaultCell = true;
                 this.addCell(defaultCell);
             }
         }
@@ -139,6 +141,7 @@ class CellStore {
                     return d.id === changeset.id[0];
                 });
 
+                cell[0].loading = false;
                 cell[0].error = changeset.error;
                 cell[0].result = [""];
                 cell[0].RClass = [];
@@ -155,6 +158,7 @@ class CellStore {
                     });
 
                     if (change !== undefined) {
+                        cell[0].loading = false;
                         cell[0].result      = change.result;
                         cell[0].lastUpdate  = new Date().getTime();
                         cell[0].hasImage    = change.hasImage[0];

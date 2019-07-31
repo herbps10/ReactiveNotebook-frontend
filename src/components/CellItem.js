@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import { Draggable } from 'react-beautiful-dnd';
 import AddCellButton from './AddCellButton.js';
 import Cell from '../stores/Cell.js';
+import BarLoader from 'react-spinners/BarLoader';
 
 // Renderers
 import RMatrix from "../renderers/RMatrix.js";
@@ -40,7 +41,9 @@ const CellItem = observer(class CellItem extends React.Component {
 
         this.instance = null;
 
-        this.state = { active: this.props.cell.open || false };
+        this.state = { 
+          active: this.props.cell.open || false
+        };
 
         this.containerRef = React.createRef();
         this.resultRef = React.createRef();
@@ -217,6 +220,9 @@ const CellItem = observer(class CellItem extends React.Component {
       this.resultRef.current.getCodeMirror().doc.setValue(value);
     }
 
+    if(value == "" && this.props.cell.defaultCell == true) {
+      return (<em>Press Shift-Enter to run the cell</em>);
+    }
     return (
       <div className={styles.resultContainer}>
         <ReactCodeMirror ref={this.resultRef} value={value} options={options} />
@@ -229,13 +235,17 @@ const CellItem = observer(class CellItem extends React.Component {
       <RImage cell={this.props.cell} onImageLoad={this.onImageLoad} lastUpdate={this.props.cell.lastUpdate} onResizeStop={this.onResizeStop} />
     ) : null;
 
-    const result = this.resultView();
+    const result = this.props.cell.error === "" ? this.resultView() : null;
     const error = this.props.cell.error === "" ? null : (
       <div className={styles.error}>{this.props.cell.error}</div>
     );
 
     const cellClasses = [styles.cell, this.state.active ? styles.active : null].join(' ');
     const mirrorClasses = [styles.mirror, this.state.active ? styles.mirrorActive : styles.mirrorInactive].join(' ');
+
+    const loader = (
+      <BarLoader loading={true} css={{ visibility: this.props.cell.loading ? 'visible' : 'hidden'}} color={'#3498db'} height={2} />
+    );
 
     return (
       <div ref={this.containerRef}>
@@ -260,7 +270,8 @@ const CellItem = observer(class CellItem extends React.Component {
                     options={this.codeMirrorOptions}
                     ref={this.codeMirrorRef} />
 
-                  <div className={styles.result}>
+                  <div className={[styles.result, this.props.cell.loading ? styles.loading : styles.loaded].join(' ')}>
+                    {loader}
                     {error}
                     {result}
                     {image}
