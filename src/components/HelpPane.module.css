@@ -1,0 +1,43 @@
+.helpPane {
+    padding: 5px 5px 0px 35px;
+}
+
+.iframe {
+    width: 99%;
+    height: 99%;
+    border: none;
+    border-left: 1px solid #ccc;
+    min-width: 550px;
+}
+
+.close {
+    color: rgb(100, 100, 100);
+    position: relative;
+    top: 5px;
+    left: -7px;
+}
+
+.modal {
+    padding: 25px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    position: absolute;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+}
+
+.modal input {
+    font-size: 2em;
+    padding: 5px;
+}
+
+.overlay {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

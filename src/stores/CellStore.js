@@ -3,6 +3,7 @@ import Cell from './Cell.js';
 
 class CellStore {
     cells = [];
+    helpTopic = "";
 
     constructor(webSocketService) {
         this.webSocketService = webSocketService;
@@ -63,6 +64,9 @@ class CellStore {
         if (cell.value === "") {
             this.deleteCell(cell);
             return;
+        }
+        else if(cell.value.startsWith("?")) {
+            this.helpTopic = cell.value.replace(/^\?/, "")
         }
         const payload = {
             type: 'update',
@@ -179,6 +183,6 @@ class CellStore {
     }
 }
 
-decorate(CellStore, { cells: observable });
+decorate(CellStore, { cells: observable, helpTopic: observable });
 
 export default CellStore;

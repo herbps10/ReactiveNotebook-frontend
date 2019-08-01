@@ -3,6 +3,7 @@ import CellList from './components/CellList.js';
 import { observer } from 'mobx-react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import Header from './components/Header.js';
+import HelpPane from './components/HelpPane.js';
 import './App.css';
 
 const App = observer(class App extends React.Component {
@@ -24,10 +25,16 @@ const App = observer(class App extends React.Component {
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
         <div className="App">
-          <header className="App-header">
-            <Header connected={this.props.store.webSocketService.connected} />
-          </header>
-          <CellList store={this.props.store} />
+          
+          <div className="contents">
+
+            <div className='leftpane'>
+              <Header connected={this.props.store.webSocketService.connected} />
+              <CellList store={this.props.store} className="cellList" />
+            </div>
+
+            <HelpPane store={this.props.store} />
+          </div>
         </div>
      </DragDropContext>
     );

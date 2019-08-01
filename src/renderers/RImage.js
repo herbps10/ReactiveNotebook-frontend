@@ -5,8 +5,8 @@ import styles from "./RImage.module.css";
 const RImage = ({ cell, onImageLoad, onResizeStop }) => {
     console.log(cell);
     const defaultSize = {
-        width: cell.viewWidth != null ? (cell.viewWidth * 100) + "%" : "auto",
-        height: cell.viewHeight != null ? (cell.viewHeight * 100) + "%" : "auto",
+        width: cell.viewWidth != null ? (cell.viewWidth * 100) + "%" : "50%",
+        height: cell.viewHeight != null ? (cell.viewHeight * 100) + "%" : "50%",
     }
 
     console.log(defaultSize);

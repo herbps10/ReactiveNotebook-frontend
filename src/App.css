@@ -1,7 +1,16 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
 
+html, body {
+  height: 100%;
+}
+
+#root {
+  height: 100%;
+}
+
 .App {
   font-family: "Open Sans";
+  height: 100%;
 }
 
 .CodeMirror {
@@ -13,4 +22,21 @@ button {
   border: none;
   cursor: pointer;
   display: block;
+}
+
+.contents {
+  position: relative;
+  display: flex;
+  flex: 1;
+  min-height: 100%;
+}
+
+.leftpane {
+  flex-grow: 4;
+  flex-basis: 0;
+}
+
+.pane {
+  flex-grow: 1;
+  flex-basis: 0;
 }

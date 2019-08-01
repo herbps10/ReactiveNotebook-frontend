@@ -9,6 +9,7 @@ class Header extends React.Component {
         const connected = this.props.connected ? "Connected" : "Disconnected";
         return (
             <div className={styles.header}>
+                <div className={styles.spacer} />
                 <div className={styles.container}>
                     <div className={styles.logo}>
                       <FontAwesomeIcon icon={faRadiationAlt} /> &nbsp;

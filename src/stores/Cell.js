@@ -35,7 +35,8 @@ decorate(Cell, {
     hasImage: observable,
     error: observable,
     RClass: observable,
-    loading: observable
+    loading: observable,
+    open: observable
 })
 
 export default Cell;

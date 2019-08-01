@@ -69,7 +69,6 @@ const RMatrix = observer(class RMatrix extends React.Component {
             </Resizable>
         );
         
-        console.log("name", this.props.cell.name);
         const title = (
             <pre className={styles.pre}>
                 {this.props.cell.name}{(this.props.cell.name === undefined ? '' : ': ')}matrix({this.props.cell.result.length}, {this.props.cell.result[0].length})
