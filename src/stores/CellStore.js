@@ -78,16 +78,17 @@ class CellStore {
 
     updateView(cell, value) {
         const payload = {
-            type: 'updateView',
+            type: 'update_from_view',
             cell: cell,
             value: value
         };
+        console.log("update_from_view", payload);
         this.webSocketService.sendMessage(JSON.stringify(payload));
     }
 
     updateSize(cell, value) {
         const payload = {
-            type: 'updateSize',
+            type: 'update_size',
             cell: cell,
             value: value
         };
@@ -96,7 +97,7 @@ class CellStore {
 
     updateOpen(cell, value) {
         const payload = {
-            type: 'updateOpen',
+            type: 'update_open',
             cell: cell,
             value: value
         };
