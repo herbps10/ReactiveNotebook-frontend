@@ -57,6 +57,13 @@ class CellStore {
             cell: cell
         }
 
+        if(this.cells.length === 0) {
+            const defaultCell = new Cell("", "");
+            defaultCell.open = true; // Have the editor show the cell in active state
+            defaultCell.defaultCell = true;
+            this.addCell(defaultCell);
+        }
+
         this.webSocketService.sendMessage(JSON.stringify(payload));
     }
 
